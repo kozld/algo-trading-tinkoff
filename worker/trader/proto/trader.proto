@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package trader;
+
+option go_package = ".;trader";
+
+service Trader {
+    rpc MarketOrder (MarketOrderRequest) returns (MarketOrderResponse) {}
+}
+
+message MarketOrderRequest {
+    string type = 1;
+    string ticker = 2;
+    int32 qty = 3;
+}
+
+message MarketOrderResponse {}
