@@ -5,6 +5,7 @@ import (
 	"fmt"
 	sdk "github.com/TinkoffCreditSystems/invest-openapi-go-sdk"
 	"log"
+	"strconv"
 	"time"
 	"tinkoff-trade-bot/trader/config"
 	pb "tinkoff-trade-bot/trader/proto"
@@ -61,11 +62,13 @@ func (ts *TraderService) MarketOrder(ctx context.Context, req *pb.MarketOrderReq
 		log.Printf("[SELL] Выставление лимитной заявки %s (%s)", figi, req.Ticker)
 
 		// Рассчитываем будущую цену продажи
-		takeProfit := float64(req.Price)
-		takeProfit += takeProfit / 100 * ts.config.TakeProfit
+		price := float64(req.Price)
+		price += price / 100 * ts.config.TakeProfit
+		formattedPrice := fmt.Sprintf("%.2f", price)
+		roundedPrice, _ := strconv.ParseFloat(formattedPrice, 64)
 
 		// Выставление лимитной заявки для счета по-умолчанию
-		placedOrder, err = ts.client.LimitOrder(ctx, sdk.DefaultAccount, figi, int(req.Qty), sdk.SELL, takeProfit)
+		placedOrder, err = ts.client.LimitOrder(ctx, sdk.DefaultAccount, figi, int(req.Qty), sdk.SELL, roundedPrice)
 		if err != nil {
 			log.Fatalln(err)
 		}
