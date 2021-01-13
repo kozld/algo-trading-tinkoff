@@ -65,7 +65,7 @@ async def get_messages(channel):
         for message in messages:
             msg = message.to_dict()
             if 'message' in msg:
-                result = re.findall(r'(SELL|BUY){1} #(\w+)\s?.*\$(\d+\.?\d*)\s?x\s?(\d+)\s?;.*\+(\d+\.?\d*)', msg['message'])
+                result = re.findall(r'(BUY){1} #(\w+)\s?.*\$(\d+\.?\d*)\s?x\s?(\d+)\s?;.*\+(\d+\.?\d*)', msg['message'])
                 if len(result) > 0:
                     if msg['date'] > start_time:
                         print(result, msg['date'], start_time, "\n")
