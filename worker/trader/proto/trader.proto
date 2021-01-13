@@ -11,7 +11,8 @@ service Trader {
 message MarketOrderRequest {
     string type = 1;
     string ticker = 2;
-    int32 qty = 3;
+    float price = 3;
+    int32 qty = 4;
 }
 
 message MarketOrderResponse {}

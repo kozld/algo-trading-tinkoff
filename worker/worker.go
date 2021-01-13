@@ -66,6 +66,7 @@ func (ws *WorkerService) Start() {
 				&pb.MarketOrderRequest{
 					Type:   a.actionType,
 					Ticker: a.ticker,
+					Price: float32(a.price),
 					Qty:    int32(qty),
 				})
 
