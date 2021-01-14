@@ -3,7 +3,6 @@ package worker
 import (
 	"context"
 	"database/sql"
-	"fmt"
 	_ "github.com/lib/pq"
 	"log"
 	"time"
@@ -12,25 +11,25 @@ import (
 )
 
 type WorkerService struct {
-	db *sql.DB
+	db     *sql.DB
 	trader pb.TraderClient
 	config *config.WorkerConfig
 }
 
 func NewWorkerService(db *sql.DB, trader pb.TraderClient, cfg *config.WorkerConfig) *WorkerService {
 	return &WorkerService{
-		db: db,
+		db:     db,
 		trader: trader,
 		config: cfg,
 	}
 }
 
-type Action struct {
-	id int
-	actionType string
+type Operation struct {
+	id     int
+	opType string
 	ticker string
-	price float64
-	qty int
+	price  float64
+	qty    int
 }
 
 func (ws *WorkerService) Start() {
@@ -38,46 +37,48 @@ func (ws *WorkerService) Start() {
 	for {
 		rows, err := ws.db.Query("SELECT id, type, ticker, price, qty FROM actions WHERE closed = FALSE LIMIT 10")
 		if err != nil {
-			log.Printf("error: %v", err)
-			time.Sleep(2 * time.Second)
+			log.Println(err)
 			continue
 		}
-		defer rows.Close()
-		var actions []Action
 
+		defer rows.Close()
+
+		var operations []Operation
 		for rows.Next() {
-			a := Action{}
-			err := rows.Scan(&a.id, &a.actionType, &a.ticker, &a.price, &a.qty)
+			op := Operation{}
+			err := rows.Scan(&op.id, &op.opType, &op.ticker, &op.price, &op.qty)
 			if err != nil {
-				fmt.Println(err)
+				log.Println(err)
 				continue
 			}
-			actions = append(actions, a)
+			operations = append(operations, op)
 		}
-		for _, a := range actions {
-			fmt.Println(a.id, a.actionType, a.ticker, a.price, a.qty)
+		for _, a := range operations {
 
-			qty := a.qty / 20
-			if qty == 0 {
-				qty = 1
-			}
+			log.Printf("Отправляю в Trader операцию: %s #%s $%.2f x %d", a.opType, a.ticker, a.price, a.qty)
 
-			_, err := ws.trader.MarketOrder(context.Background(),
-				&pb.MarketOrderRequest{
-					Type:   a.actionType,
+			//qty := a.qty / 20
+			//if qty == 0 {
+			//	qty = 1
+			//}
+
+			placedOrder, err := ws.trader.CreateMarketOrder(context.Background(),
+				&pb.CreateMarketOrderRequest{
+					OpType: a.opType,
 					Ticker: a.ticker,
-					Price: float32(a.price),
-					Qty:    int32(qty),
+					Qty:    int32(a.qty),
 				})
 
 			if err != nil {
-				log.Printf("error: %v", err)
-			} else {
-				log.Println("success order")
-				_, err := ws.db.Exec("UPDATE actions SET closed = TRUE WHERE id = $1", a.id)
-				if err != nil{
-					panic(err)
-				}
+				log.Println(err)
+				continue
+			}
+
+			log.Printf("Ответ: %+v\n", placedOrder)
+
+			_, err = ws.db.Exec("UPDATE actions SET closed = TRUE WHERE id = $1", a.id)
+			if err != nil {
+				panic(err)
 			}
 		}
 

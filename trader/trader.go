@@ -5,7 +5,6 @@ import (
 	"fmt"
 	sdk "github.com/TinkoffCreditSystems/invest-openapi-go-sdk"
 	"log"
-	"strconv"
 	"time"
 	"tinkoff-trade-bot/trader/config"
 	pb "tinkoff-trade-bot/trader/proto"
@@ -25,55 +24,89 @@ func NewTraderService(cfg *config.TraderConfig) *TraderService {
 	}
 }
 
-func (ts *TraderService) MarketOrder(ctx context.Context, req *pb.MarketOrderRequest) (*pb.MarketOrderResponse, error) {
-	fmt.Println("[REQUEST]", req)
-
+func (ts *TraderService) getFIGIbyTicker(ticker string) (string, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
-	log.Printf("Получение инструменов по тикеру %s", req.Ticker)
-	instruments, err := ts.client.InstrumentByTicker(ctx, req.Ticker)
+	instruments, err := ts.client.InstrumentByTicker(ctx, ticker)
 	if err != nil {
 		log.Println(err)
 	}
-	log.Printf("%+v\n", instruments)
 
 	if len(instruments) > 0 {
-		figi := instruments[0].FIGI
-		actionType := sdk.BUY
-		if req.Type == "SELL" {
-			actionType = sdk.SELL
+		return instruments[0].FIGI, nil
+	}
+
+	return "", fmt.Errorf("инструмент не найден")
+}
+
+func (ts *TraderService) CreateMarketOrder(ctx context.Context, req *pb.CreateMarketOrderRequest) (*pb.CreateMarketOrderResponse, error) {
+
+	name, err := ts.getFIGIbyTicker(req.Ticker)
+	if err != nil {
+		log.Println(err)
+	}
+
+	if name != "" {
+		opType := sdk.BUY
+		if req.OpType == "SELL" {
+			opType = sdk.SELL
 		}
 
-		ctx, cancel = context.WithTimeout(context.Background(), 5*time.Second)
+		qty := int(req.Qty)
+		log.Printf("Выставление рыночной заявки: %s #%s x %d", opType, req.Ticker, qty)
+
+		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 		defer cancel()
 
-		log.Printf("[%s] Выставление рыночной заявки  %s (%s)", req.Type, figi, req.Ticker)
-		// Выставление рыночной заявки для счета по-умолчанию
-		placedOrder, err := ts.client.MarketOrder(ctx, sdk.DefaultAccount, figi, int(req.Qty), actionType)
+		placedOrder, err := ts.client.MarketOrder(ctx, sdk.DefaultAccount, name, qty, opType)
 		if err != nil {
 			log.Println(err)
 		}
-		log.Printf("[RESULT] %+v\n", placedOrder)
 
-		ctx, cancel = context.WithTimeout(context.Background(), 5*time.Second)
-		defer cancel()
-
-		log.Printf("[SELL] Выставление лимитной заявки %s (%s)", figi, req.Ticker)
-
-		// Рассчитываем будущую цену продажи
-		price := float64(req.Price)
-		price += price / 100 * ts.config.TakeProfit
-		formattedPrice := fmt.Sprintf("%.2f", price)
-		roundedPrice, _ := strconv.ParseFloat(formattedPrice, 64)
-
-		// Выставление лимитной заявки для счета по-умолчанию
-		placedOrder, err = ts.client.LimitOrder(ctx, sdk.DefaultAccount, figi, int(req.Qty), sdk.SELL, roundedPrice)
-		if err != nil {
-			log.Fatalln(err)
-		}
-		log.Printf("[RESULT] %+v\n", placedOrder)
+		log.Printf("Результат: %+v\n", placedOrder)
 	}
 
-	return &pb.MarketOrderResponse{}, nil
+	return &pb.CreateMarketOrderResponse{}, nil
+}
+
+func (ts *TraderService) CreateLimitOrder(ctx context.Context, req *pb.CreateLimitOrderRequest) (*pb.CreateLimitOrderResponse, error) {
+
+	name, err := ts.getFIGIbyTicker(req.Ticker)
+	if err != nil {
+		log.Println(err)
+	}
+
+	if name != "" {
+		opType := sdk.BUY
+		if req.OpType == "SELL" {
+			opType = sdk.SELL
+		}
+
+		price := float64(req.Price)
+		qty := int(req.Qty)
+		log.Printf("Выставление лимитной заявки: %s #%s $%.2f x %d", opType, req.Ticker, price, qty)
+
+		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+		defer cancel()
+
+		placedOrder, err := ts.client.LimitOrder(ctx, sdk.DefaultAccount, name, qty, opType, price)
+		if err != nil {
+			log.Println(err)
+		}
+
+		log.Printf("Успех: %+v\n", placedOrder)
+	}
+
+	return &pb.CreateLimitOrderResponse{}, nil
+}
+
+func (ts *TraderService) TakeProfit(ctx context.Context, req *pb.TakeProfitRequest) (*pb.TakeProfitResponse, error) {
+
+	return &pb.TakeProfitResponse{}, nil
+}
+
+func (ts *TraderService) StopLoss(ctx context.Context, req *pb.StopLossRequest) (*pb.StopLossResponse, error) {
+
+	return &pb.StopLossResponse{}, nil
 }

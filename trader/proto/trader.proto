@@ -5,14 +5,41 @@ package trader;
 option go_package = ".;trader";
 
 service Trader {
-    rpc MarketOrder (MarketOrderRequest) returns (MarketOrderResponse) {}
+    rpc CreateMarketOrder (CreateMarketOrderRequest) returns (CreateMarketOrderResponse) {}
+    rpc CreateLimitOrder (CreateLimitOrderRequest) returns (CreateLimitOrderResponse) {}
+    rpc TakeProfit (TakeProfitRequest) returns (TakeProfitResponse) {}
+    rpc StopLoss (StopLossRequest) returns (StopLossResponse) {}
 }
 
-message MarketOrderRequest {
-    string type = 1;
+message CreateMarketOrderRequest {
+    string opType = 1;
+    string ticker = 2;
+    int32 qty = 3;
+}
+
+message CreateMarketOrderResponse {}
+
+message CreateLimitOrderRequest {
+    string opType = 1;
     string ticker = 2;
     float price = 3;
     int32 qty = 4;
 }
 
-message MarketOrderResponse {}
+message CreateLimitOrderResponse {}
+
+message TakeProfitRequest {
+    string ticker = 2;
+    float price = 3;
+    int32 qty = 4;
+}
+
+message TakeProfitResponse {}
+
+message StopLossRequest {
+    string ticker = 2;
+    float price = 3;
+    int32 qty = 4;
+}
+
+message StopLossResponse {}
