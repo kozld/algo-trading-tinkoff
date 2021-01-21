@@ -65,7 +65,7 @@ async def get_messages(channel):
 
         messages = history.messages
 
-        for message in messages.reverse():
+        for message in messages[::-1]:
             msg = message.to_dict()
 
             if msg['date'] > service_time:
@@ -73,6 +73,7 @@ async def get_messages(channel):
                 if 'message' in msg:
                     result = parse_text(msg_pattern, msg['message'])
                     if len(result) > 0:
+                        print('[Принято сообщение] %s' % msg['message'])
                         op_type = result[0][0]
                         ticker = result[0][1]
                         # price = float(result[0][2])
