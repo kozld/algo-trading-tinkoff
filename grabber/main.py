@@ -28,9 +28,8 @@ client = TelegramClient(username, api_id, api_hash)
 client.start()
 
 async def get_messages(channel):
-    start_time = datetime.now(timezone.utc) # - timedelta(days=2)
+    service_time = datetime.now(timezone.utc) # - timedelta(days=2)
     limit_msg = 5
-    last_msg_id = 306
 
     while True:
         history = await client(GetHistoryRequest(
@@ -45,20 +44,15 @@ async def get_messages(channel):
 
         messages = history.messages
 
-        for message in messages:
+        for message in messages[::-1]:
             msg = message.to_dict()
-
-            print('message: ', msg['message'])
-            print('last_msg_id: ', last_msg_id)
-
-            if msg['id'] <= last_msg_id:
-                continue
 
             if 'message' in msg:
                 result = re.findall(r'(BUY){1} #(\w+)\s?.*\$(\d+\.?\d*)\s?x\s?(\d+)\s?;.*\+(\d+\.?\d*)', msg['message'])
+                print(result)
                 if len(result) > 0:
-                    if msg['date'] > start_time:
-                        print(result, msg['date'], start_time, "\n")
+                    if msg['date'] > service_time:
+                        service_time = msg['date']
 
                         op_type = result[0][0]
                         ticker = result[0][1]
@@ -71,8 +65,6 @@ async def get_messages(channel):
                         request = trader_pb2.CreateMarketOrderRequest(opType=op_type, ticker=ticker, qty=scaled_qty)
                         response = stub.CreateMarketOrder(request)
                         print(response.data)
-
-            last_msg_id = msg['id']
 
 async def main():
     channel = await client.get_entity(channel_url)
