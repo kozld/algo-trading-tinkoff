@@ -58,7 +58,7 @@ async def get_messages(channel):
                         op_type = result[0][0]
                         ticker = result[0][1]
                         # price = result[0][2]
-                        qty = result[0][3]
+                        qty = int(result[0][3])
                         scaled_qty = int(qty / 10)
                         if scaled_qty == 0:
                             scaled_qty = 1
