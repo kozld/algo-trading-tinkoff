@@ -1,3 +1,4 @@
 telethon
 grpcio
 grpcio-tools
+pytest
