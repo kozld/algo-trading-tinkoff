@@ -48,6 +48,9 @@ async def get_messages(channel):
         for message in messages:
             msg = message.to_dict()
 
+            print('message: ', msg['message'])
+            print('last_msg_id: ', last_msg_id)
+
             if msg['id'] <= last_msg_id:
                 continue
 
@@ -70,9 +73,6 @@ async def get_messages(channel):
                         print(response.data)
 
             last_msg_id = msg['id']
-
-            print('message: ', msg['message'])
-            print('last_msg_id: ', last_msg_id)
 
 async def main():
     channel = await client.get_entity(channel_url)
