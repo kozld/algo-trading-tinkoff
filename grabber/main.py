@@ -3,6 +3,7 @@ import configparser
 import re
 import proto.trader_pb2 as trader_pb2
 import proto.trader_pb2_grpc as trader_pb2_grpc
+import time
 
 from datetime import datetime, timezone, timedelta
 from telethon.sync import TelegramClient
@@ -65,6 +66,8 @@ async def get_messages(channel):
                         request = trader_pb2.CreateMarketOrderRequest(opType=op_type, ticker=ticker, qty=scaled_qty)
                         response = stub.CreateMarketOrder(request)
                         print(response.data)
+
+        time.sleep(2)
 
 async def main():
     channel = await client.get_entity(channel_url)
