@@ -239,208 +239,6 @@ func (*CreateLimitOrderResponse) Descriptor() ([]byte, []int) {
 	return file_trader_proto_rawDescGZIP(), []int{3}
 }
 
-type TakeProfitRequest struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	Ticker string  `protobuf:"bytes,2,opt,name=ticker,proto3" json:"ticker,omitempty"`
-	Price  float32 `protobuf:"fixed32,3,opt,name=price,proto3" json:"price,omitempty"`
-	Qty    int32   `protobuf:"varint,4,opt,name=qty,proto3" json:"qty,omitempty"`
-}
-
-func (x *TakeProfitRequest) Reset() {
-	*x = TakeProfitRequest{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_trader_proto_msgTypes[4]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *TakeProfitRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*TakeProfitRequest) ProtoMessage() {}
-
-func (x *TakeProfitRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_trader_proto_msgTypes[4]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use TakeProfitRequest.ProtoReflect.Descriptor instead.
-func (*TakeProfitRequest) Descriptor() ([]byte, []int) {
-	return file_trader_proto_rawDescGZIP(), []int{4}
-}
-
-func (x *TakeProfitRequest) GetTicker() string {
-	if x != nil {
-		return x.Ticker
-	}
-	return ""
-}
-
-func (x *TakeProfitRequest) GetPrice() float32 {
-	if x != nil {
-		return x.Price
-	}
-	return 0
-}
-
-func (x *TakeProfitRequest) GetQty() int32 {
-	if x != nil {
-		return x.Qty
-	}
-	return 0
-}
-
-type TakeProfitResponse struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-}
-
-func (x *TakeProfitResponse) Reset() {
-	*x = TakeProfitResponse{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_trader_proto_msgTypes[5]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *TakeProfitResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*TakeProfitResponse) ProtoMessage() {}
-
-func (x *TakeProfitResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_trader_proto_msgTypes[5]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use TakeProfitResponse.ProtoReflect.Descriptor instead.
-func (*TakeProfitResponse) Descriptor() ([]byte, []int) {
-	return file_trader_proto_rawDescGZIP(), []int{5}
-}
-
-type StopLossRequest struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	Ticker string  `protobuf:"bytes,2,opt,name=ticker,proto3" json:"ticker,omitempty"`
-	Price  float32 `protobuf:"fixed32,3,opt,name=price,proto3" json:"price,omitempty"`
-	Qty    int32   `protobuf:"varint,4,opt,name=qty,proto3" json:"qty,omitempty"`
-}
-
-func (x *StopLossRequest) Reset() {
-	*x = StopLossRequest{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_trader_proto_msgTypes[6]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *StopLossRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*StopLossRequest) ProtoMessage() {}
-
-func (x *StopLossRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_trader_proto_msgTypes[6]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use StopLossRequest.ProtoReflect.Descriptor instead.
-func (*StopLossRequest) Descriptor() ([]byte, []int) {
-	return file_trader_proto_rawDescGZIP(), []int{6}
-}
-
-func (x *StopLossRequest) GetTicker() string {
-	if x != nil {
-		return x.Ticker
-	}
-	return ""
-}
-
-func (x *StopLossRequest) GetPrice() float32 {
-	if x != nil {
-		return x.Price
-	}
-	return 0
-}
-
-func (x *StopLossRequest) GetQty() int32 {
-	if x != nil {
-		return x.Qty
-	}
-	return 0
-}
-
-type StopLossResponse struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-}
-
-func (x *StopLossResponse) Reset() {
-	*x = StopLossResponse{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_trader_proto_msgTypes[7]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *StopLossResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*StopLossResponse) ProtoMessage() {}
-
-func (x *StopLossResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_trader_proto_msgTypes[7]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use StopLossResponse.ProtoReflect.Descriptor instead.
-func (*StopLossResponse) Descriptor() ([]byte, []int) {
-	return file_trader_proto_rawDescGZIP(), []int{7}
-}
-
 var File_trader_proto protoreflect.FileDescriptor
 
 var file_trader_proto_rawDesc = []byte{
@@ -462,41 +260,20 @@ var file_trader_proto_rawDesc = []byte{
 	0x63, 0x65, 0x12, 0x10, 0x0a, 0x03, 0x71, 0x74, 0x79, 0x18, 0x04, 0x20, 0x01, 0x28, 0x05, 0x52,
 	0x03, 0x71, 0x74, 0x79, 0x22, 0x1a, 0x0a, 0x18, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x4c, 0x69,
 	0x6d, 0x69, 0x74, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
-	0x22, 0x53, 0x0a, 0x11, 0x54, 0x61, 0x6b, 0x65, 0x50, 0x72, 0x6f, 0x66, 0x69, 0x74, 0x52, 0x65,
-	0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x16, 0x0a, 0x06, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x72, 0x18,
-	0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x72, 0x12, 0x14, 0x0a,
-	0x05, 0x70, 0x72, 0x69, 0x63, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x02, 0x52, 0x05, 0x70, 0x72,
-	0x69, 0x63, 0x65, 0x12, 0x10, 0x0a, 0x03, 0x71, 0x74, 0x79, 0x18, 0x04, 0x20, 0x01, 0x28, 0x05,
-	0x52, 0x03, 0x71, 0x74, 0x79, 0x22, 0x14, 0x0a, 0x12, 0x54, 0x61, 0x6b, 0x65, 0x50, 0x72, 0x6f,
-	0x66, 0x69, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x51, 0x0a, 0x0f, 0x53,
-	0x74, 0x6f, 0x70, 0x4c, 0x6f, 0x73, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x16,
-	0x0a, 0x06, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x72, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06,
-	0x74, 0x69, 0x63, 0x6b, 0x65, 0x72, 0x12, 0x14, 0x0a, 0x05, 0x70, 0x72, 0x69, 0x63, 0x65, 0x18,
-	0x03, 0x20, 0x01, 0x28, 0x02, 0x52, 0x05, 0x70, 0x72, 0x69, 0x63, 0x65, 0x12, 0x10, 0x0a, 0x03,
-	0x71, 0x74, 0x79, 0x18, 0x04, 0x20, 0x01, 0x28, 0x05, 0x52, 0x03, 0x71, 0x74, 0x79, 0x22, 0x12,
-	0x0a, 0x10, 0x53, 0x74, 0x6f, 0x70, 0x4c, 0x6f, 0x73, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
-	0x73, 0x65, 0x32, 0xc5, 0x02, 0x0a, 0x06, 0x54, 0x72, 0x61, 0x64, 0x65, 0x72, 0x12, 0x5a, 0x0a,
-	0x11, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x4d, 0x61, 0x72, 0x6b, 0x65, 0x74, 0x4f, 0x72, 0x64,
-	0x65, 0x72, 0x12, 0x20, 0x2e, 0x74, 0x72, 0x61, 0x64, 0x65, 0x72, 0x2e, 0x43, 0x72, 0x65, 0x61,
-	0x74, 0x65, 0x4d, 0x61, 0x72, 0x6b, 0x65, 0x74, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x52, 0x65, 0x71,
-	0x75, 0x65, 0x73, 0x74, 0x1a, 0x21, 0x2e, 0x74, 0x72, 0x61, 0x64, 0x65, 0x72, 0x2e, 0x43, 0x72,
-	0x65, 0x61, 0x74, 0x65, 0x4d, 0x61, 0x72, 0x6b, 0x65, 0x74, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x52,
-	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x57, 0x0a, 0x10, 0x43, 0x72, 0x65,
-	0x61, 0x74, 0x65, 0x4c, 0x69, 0x6d, 0x69, 0x74, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x12, 0x1f, 0x2e,
-	0x74, 0x72, 0x61, 0x64, 0x65, 0x72, 0x2e, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x4c, 0x69, 0x6d,
-	0x69, 0x74, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x20,
-	0x2e, 0x74, 0x72, 0x61, 0x64, 0x65, 0x72, 0x2e, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x4c, 0x69,
-	0x6d, 0x69, 0x74, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
-	0x22, 0x00, 0x12, 0x45, 0x0a, 0x0a, 0x54, 0x61, 0x6b, 0x65, 0x50, 0x72, 0x6f, 0x66, 0x69, 0x74,
-	0x12, 0x19, 0x2e, 0x74, 0x72, 0x61, 0x64, 0x65, 0x72, 0x2e, 0x54, 0x61, 0x6b, 0x65, 0x50, 0x72,
-	0x6f, 0x66, 0x69, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x1a, 0x2e, 0x74, 0x72,
-	0x61, 0x64, 0x65, 0x72, 0x2e, 0x54, 0x61, 0x6b, 0x65, 0x50, 0x72, 0x6f, 0x66, 0x69, 0x74, 0x52,
-	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x3f, 0x0a, 0x08, 0x53, 0x74, 0x6f,
-	0x70, 0x4c, 0x6f, 0x73, 0x73, 0x12, 0x17, 0x2e, 0x74, 0x72, 0x61, 0x64, 0x65, 0x72, 0x2e, 0x53,
-	0x74, 0x6f, 0x70, 0x4c, 0x6f, 0x73, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x18,
-	0x2e, 0x74, 0x72, 0x61, 0x64, 0x65, 0x72, 0x2e, 0x53, 0x74, 0x6f, 0x70, 0x4c, 0x6f, 0x73, 0x73,
-	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x42, 0x0a, 0x5a, 0x08, 0x2e, 0x3b,
-	0x74, 0x72, 0x61, 0x64, 0x65, 0x72, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x32, 0xbd, 0x01, 0x0a, 0x06, 0x54, 0x72, 0x61, 0x64, 0x65, 0x72, 0x12, 0x5a, 0x0a, 0x11, 0x43,
+	0x72, 0x65, 0x61, 0x74, 0x65, 0x4d, 0x61, 0x72, 0x6b, 0x65, 0x74, 0x4f, 0x72, 0x64, 0x65, 0x72,
+	0x12, 0x20, 0x2e, 0x74, 0x72, 0x61, 0x64, 0x65, 0x72, 0x2e, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65,
+	0x4d, 0x61, 0x72, 0x6b, 0x65, 0x74, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x52, 0x65, 0x71, 0x75, 0x65,
+	0x73, 0x74, 0x1a, 0x21, 0x2e, 0x74, 0x72, 0x61, 0x64, 0x65, 0x72, 0x2e, 0x43, 0x72, 0x65, 0x61,
+	0x74, 0x65, 0x4d, 0x61, 0x72, 0x6b, 0x65, 0x74, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x52, 0x65, 0x73,
+	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x57, 0x0a, 0x10, 0x43, 0x72, 0x65, 0x61, 0x74,
+	0x65, 0x4c, 0x69, 0x6d, 0x69, 0x74, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x12, 0x1f, 0x2e, 0x74, 0x72,
+	0x61, 0x64, 0x65, 0x72, 0x2e, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x4c, 0x69, 0x6d, 0x69, 0x74,
+	0x4f, 0x72, 0x64, 0x65, 0x72, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x20, 0x2e, 0x74,
+	0x72, 0x61, 0x64, 0x65, 0x72, 0x2e, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x4c, 0x69, 0x6d, 0x69,
+	0x74, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00,
+	0x42, 0x0a, 0x5a, 0x08, 0x2e, 0x3b, 0x74, 0x72, 0x61, 0x64, 0x65, 0x72, 0x62, 0x06, 0x70, 0x72,
+	0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -511,28 +288,20 @@ func file_trader_proto_rawDescGZIP() []byte {
 	return file_trader_proto_rawDescData
 }
 
-var file_trader_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
+var file_trader_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
 var file_trader_proto_goTypes = []interface{}{
 	(*CreateMarketOrderRequest)(nil),  // 0: trader.CreateMarketOrderRequest
 	(*CreateMarketOrderResponse)(nil), // 1: trader.CreateMarketOrderResponse
 	(*CreateLimitOrderRequest)(nil),   // 2: trader.CreateLimitOrderRequest
 	(*CreateLimitOrderResponse)(nil),  // 3: trader.CreateLimitOrderResponse
-	(*TakeProfitRequest)(nil),         // 4: trader.TakeProfitRequest
-	(*TakeProfitResponse)(nil),        // 5: trader.TakeProfitResponse
-	(*StopLossRequest)(nil),           // 6: trader.StopLossRequest
-	(*StopLossResponse)(nil),          // 7: trader.StopLossResponse
 }
 var file_trader_proto_depIdxs = []int32{
 	0, // 0: trader.Trader.CreateMarketOrder:input_type -> trader.CreateMarketOrderRequest
 	2, // 1: trader.Trader.CreateLimitOrder:input_type -> trader.CreateLimitOrderRequest
-	4, // 2: trader.Trader.TakeProfit:input_type -> trader.TakeProfitRequest
-	6, // 3: trader.Trader.StopLoss:input_type -> trader.StopLossRequest
-	1, // 4: trader.Trader.CreateMarketOrder:output_type -> trader.CreateMarketOrderResponse
-	3, // 5: trader.Trader.CreateLimitOrder:output_type -> trader.CreateLimitOrderResponse
-	5, // 6: trader.Trader.TakeProfit:output_type -> trader.TakeProfitResponse
-	7, // 7: trader.Trader.StopLoss:output_type -> trader.StopLossResponse
-	4, // [4:8] is the sub-list for method output_type
-	0, // [0:4] is the sub-list for method input_type
+	1, // 2: trader.Trader.CreateMarketOrder:output_type -> trader.CreateMarketOrderResponse
+	3, // 3: trader.Trader.CreateLimitOrder:output_type -> trader.CreateLimitOrderResponse
+	2, // [2:4] is the sub-list for method output_type
+	0, // [0:2] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
 	0, // [0:0] is the sub-list for extension extendee
 	0, // [0:0] is the sub-list for field type_name
@@ -592,54 +361,6 @@ func file_trader_proto_init() {
 				return nil
 			}
 		}
-		file_trader_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*TakeProfitRequest); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_trader_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*TakeProfitResponse); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_trader_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*StopLossRequest); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_trader_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*StopLossResponse); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -647,7 +368,7 @@ func file_trader_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_trader_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   8,
+			NumMessages:   4,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
@@ -675,8 +396,6 @@ const _ = grpc.SupportPackageIsVersion6
 type TraderClient interface {
 	CreateMarketOrder(ctx context.Context, in *CreateMarketOrderRequest, opts ...grpc.CallOption) (*CreateMarketOrderResponse, error)
 	CreateLimitOrder(ctx context.Context, in *CreateLimitOrderRequest, opts ...grpc.CallOption) (*CreateLimitOrderResponse, error)
-	TakeProfit(ctx context.Context, in *TakeProfitRequest, opts ...grpc.CallOption) (*TakeProfitResponse, error)
-	StopLoss(ctx context.Context, in *StopLossRequest, opts ...grpc.CallOption) (*StopLossResponse, error)
 }
 
 type traderClient struct {
@@ -705,30 +424,10 @@ func (c *traderClient) CreateLimitOrder(ctx context.Context, in *CreateLimitOrde
 	return out, nil
 }
 
-func (c *traderClient) TakeProfit(ctx context.Context, in *TakeProfitRequest, opts ...grpc.CallOption) (*TakeProfitResponse, error) {
-	out := new(TakeProfitResponse)
-	err := c.cc.Invoke(ctx, "/trader.Trader/TakeProfit", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *traderClient) StopLoss(ctx context.Context, in *StopLossRequest, opts ...grpc.CallOption) (*StopLossResponse, error) {
-	out := new(StopLossResponse)
-	err := c.cc.Invoke(ctx, "/trader.Trader/StopLoss", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // TraderServer is the server API for Trader service.
 type TraderServer interface {
 	CreateMarketOrder(context.Context, *CreateMarketOrderRequest) (*CreateMarketOrderResponse, error)
 	CreateLimitOrder(context.Context, *CreateLimitOrderRequest) (*CreateLimitOrderResponse, error)
-	TakeProfit(context.Context, *TakeProfitRequest) (*TakeProfitResponse, error)
-	StopLoss(context.Context, *StopLossRequest) (*StopLossResponse, error)
 }
 
 // UnimplementedTraderServer can be embedded to have forward compatible implementations.
@@ -740,12 +439,6 @@ func (*UnimplementedTraderServer) CreateMarketOrder(context.Context, *CreateMark
 }
 func (*UnimplementedTraderServer) CreateLimitOrder(context.Context, *CreateLimitOrderRequest) (*CreateLimitOrderResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateLimitOrder not implemented")
-}
-func (*UnimplementedTraderServer) TakeProfit(context.Context, *TakeProfitRequest) (*TakeProfitResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method TakeProfit not implemented")
-}
-func (*UnimplementedTraderServer) StopLoss(context.Context, *StopLossRequest) (*StopLossResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method StopLoss not implemented")
 }
 
 func RegisterTraderServer(s *grpc.Server, srv TraderServer) {
@@ -788,42 +481,6 @@ func _Trader_CreateLimitOrder_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Trader_TakeProfit_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(TakeProfitRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(TraderServer).TakeProfit(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/trader.Trader/TakeProfit",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TraderServer).TakeProfit(ctx, req.(*TakeProfitRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Trader_StopLoss_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(StopLossRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(TraderServer).StopLoss(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/trader.Trader/StopLoss",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TraderServer).StopLoss(ctx, req.(*StopLossRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 var _Trader_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "trader.Trader",
 	HandlerType: (*TraderServer)(nil),
@@ -835,14 +492,6 @@ var _Trader_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateLimitOrder",
 			Handler:    _Trader_CreateLimitOrder_Handler,
-		},
-		{
-			MethodName: "TakeProfit",
-			Handler:    _Trader_TakeProfit_Handler,
-		},
-		{
-			MethodName: "StopLoss",
-			Handler:    _Trader_StopLoss_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

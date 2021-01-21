@@ -1,2 +1,3 @@
-psycopg2
 telethon
+grpcio
+grpcio-tools

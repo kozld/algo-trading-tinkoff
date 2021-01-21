@@ -2,14 +2,6 @@ version: "3"
 
 services:
 
-  database:
-    image: postgres
-    container_name: database
-    env_file:
-      - database.env
-    networks:
-      - my-network
-
   grabber:
     build:
       context: ./grabber
@@ -19,8 +11,6 @@ services:
     command: python main.py
     networks:
       - my-network
-    depends_on:
-      - database
 
   trader:
     build:
@@ -30,8 +20,6 @@ services:
       - trader.env
     networks:
       - my-network
-    depends_on:
-      - database
 
   worker:
     build:
@@ -42,7 +30,6 @@ services:
     networks:
       - my-network
     depends_on:
-      - database
       - trader
 
 networks:

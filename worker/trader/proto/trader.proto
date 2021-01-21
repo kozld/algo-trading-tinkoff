@@ -7,8 +7,6 @@ option go_package = ".;trader";
 service Trader {
     rpc CreateMarketOrder (CreateMarketOrderRequest) returns (CreateMarketOrderResponse) {}
     rpc CreateLimitOrder (CreateLimitOrderRequest) returns (CreateLimitOrderResponse) {}
-    rpc TakeProfit (TakeProfitRequest) returns (TakeProfitResponse) {}
-    rpc StopLoss (StopLossRequest) returns (StopLossResponse) {}
 }
 
 message CreateMarketOrderRequest {
@@ -27,19 +25,3 @@ message CreateLimitOrderRequest {
 }
 
 message CreateLimitOrderResponse {}
-
-message TakeProfitRequest {
-    string ticker = 2;
-    float price = 3;
-    int32 qty = 4;
-}
-
-message TakeProfitResponse {}
-
-message StopLossRequest {
-    string ticker = 2;
-    float price = 3;
-    int32 qty = 4;
-}
-
-message StopLossResponse {}

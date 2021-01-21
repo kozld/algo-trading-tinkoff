@@ -7,12 +7,9 @@ import (
 )
 
 type WorkerConfig struct {
-	PgHost string `env:"PG_HOST" envDefault:"localhost"`
-	PgUser string `env:"PG_USER,required"`
-	PgPassword string `env:"PG_PASSWORD,required"`
-	PgName string `env:"PG_NAME,required"`
 	TraderHost string `env:"TRADER_HOST,required"`
 	TraderPort int32  `env:"TRADER_PORT" envDefault:"5300"`
+	TinkoffToken string `env:"TINKOFF_TOKEN,required"`
 }
 
 func GetConfig() WorkerConfig {

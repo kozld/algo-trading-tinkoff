@@ -2,8 +2,7 @@ package worker
 
 import (
 	"context"
-	"database/sql"
-	_ "github.com/lib/pq"
+	sdk "github.com/TinkoffCreditSystems/invest-openapi-go-sdk"
 	"log"
 	"time"
 	"tinkoff-trade-bot/worker/config"
@@ -11,77 +10,72 @@ import (
 )
 
 type WorkerService struct {
-	db     *sql.DB
 	trader pb.TraderClient
+	client *sdk.RestClient
 	config *config.WorkerConfig
 }
 
-func NewWorkerService(db *sql.DB, trader pb.TraderClient, cfg *config.WorkerConfig) *WorkerService {
+func NewWorkerService(trader pb.TraderClient, cfg *config.WorkerConfig) *WorkerService {
+	client := sdk.NewRestClient(cfg.TinkoffToken)
+
 	return &WorkerService{
-		db:     db,
 		trader: trader,
+		client: client,
 		config: cfg,
 	}
 }
 
-type Operation struct {
-	id     int
-	opType string
-	ticker string
-	price  float64
-	qty    int
-}
-
-func (ws *WorkerService) Start() {
+func (ws *WorkerService) Monitor() {
 
 	for {
-		rows, err := ws.db.Query("SELECT id, type, ticker, price, qty FROM actions WHERE closed = FALSE LIMIT 10")
+		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+		defer cancel()
+
+		log.Println("Получение списка НЕ валютных активов портфеля для счета по-умолчанию")
+		positions, err := ws.client.PositionsPortfolio(ctx, sdk.DefaultAccount)
 		if err != nil {
-			log.Println(err)
-			continue
+			log.Fatalln(err)
 		}
+		log.Printf("%+v\n", positions)
 
-		defer rows.Close()
-
-		var operations []Operation
-		for rows.Next() {
-			op := Operation{}
-			err := rows.Scan(&op.id, &op.opType, &op.ticker, &op.price, &op.qty)
-			if err != nil {
-				log.Println(err)
+		for _, position := range positions {
+			if position.InstrumentType != "Stock" {
 				continue
 			}
-			operations = append(operations, op)
-		}
-		for _, a := range operations {
 
-			log.Printf("Отправляю в Trader операцию: %s #%s $%.2f x %d", a.opType, a.ticker, a.price, a.qty)
+			avgPrice := position.AveragePositionPrice.Value
+			ticker := position.Ticker
+			figi := position.FIGI
 
-			//qty := a.qty / 20
-			//if qty == 0 {
-			//	qty = 1
-			//}
+			ctx, cancel = context.WithTimeout(context.Background(), 5*time.Second)
+			defer cancel()
 
-			placedOrder, err := ws.trader.CreateMarketOrder(context.Background(),
-				&pb.CreateMarketOrderRequest{
-					OpType: a.opType,
-					Ticker: a.ticker,
-					Qty:    int32(a.qty),
+			log.Println("Получение списка выставленных заявок(ордеров) для счета по-умолчанию")
+			orders, err := ws.client.Orders(ctx, sdk.DefaultAccount)
+			if err != nil {
+				log.Fatalln(err)
+			}
+
+			freeLots := position.Lots
+			orderExist := false
+			for _, order := range orders {
+				if order.FIGI == figi {
+					freeLots -= order.RequestedLots
+					orderExist = true
+				}
+			}
+
+			if !orderExist || freeLots > 0 {
+				sellPrice := avgPrice + avgPrice*0.025 // Take profit == 2.5
+				ws.trader.CreateLimitOrder(context.Background(), &pb.CreateLimitOrderRequest{
+					OpType: "SELL",
+					Ticker: ticker,
+					Price:  float32(sellPrice),
+					Qty:    int32(freeLots),
 				})
-
-			if err != nil {
-				log.Println(err)
-				continue
 			}
 
-			log.Printf("Ответ: %+v\n", placedOrder)
-
-			_, err = ws.db.Exec("UPDATE actions SET closed = TRUE WHERE id = $1", a.id)
-			if err != nil {
-				panic(err)
-			}
 		}
-
-		time.Sleep(2 * time.Second)
+		time.Sleep(30 * time.Second)
 	}
 }
