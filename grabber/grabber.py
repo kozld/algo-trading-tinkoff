@@ -21,7 +21,7 @@ msg_pattern = config['Channel']['msg_pattern']
 
 trader_host = config['Trader']['trader_host']
 trader_port = config['Trader']['trader_port']
-scale_factor = config['Trader']['scale_factor']
+scale_factor = int(config['Trader']['scale_factor'])
 
 channel = grpc.insecure_channel(trader_host + ':' + trader_port)
 stub = trader_pb2_grpc.TraderStub(channel)
