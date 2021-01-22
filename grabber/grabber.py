@@ -37,18 +37,17 @@ def parse_text(pattern, text):
     result = regex.findall(text)
     return result
 
-def transfer_to_trader(op_type, ticker, qty):
+def transfer_to_trader(op_type, ticker, price, qty):
     try:
-        request = trader_pb2.CreateMarketOrderRequest(opType=op_type, ticker=ticker, qty=qty)
-        response = stub.CreateMarketOrder(request)
-        print('[Ответ] %s' % response)
-    except Exception:
-        return False
+        request = trader_pb2.CreateLimitOrderRequest(opType=op_type, ticker=ticker, price=price, qty=qty)
+        response = stub.CreateLimitOrder(request)
+        response = '[Ответ] %s' % response
+    except:
+        response = '[Ошибка] Не удалось вызвать сервис Trader'
 
-    return True
+    return response
 
 async def get_messages(channel):
-
     service_time = datetime.now(timezone.utc)
     limit_msg = 5
 
@@ -73,19 +72,19 @@ async def get_messages(channel):
                 if 'message' in msg:
                     result = parse_text(msg_pattern, msg['message'])
                     if len(result) > 0:
-                        print('[Принято сообщение] %s' % msg['message'])
+                        print('[Принято] %s' % msg['message'])
                         op_type = result[0][0]
                         ticker = result[0][1]
-                        # price = float(result[0][2])
+                        price = float(result[0][2])
                         qty = int(result[0][3])
                         scaled_qty = round_scale(qty)
 
                         if scaled_qty == 0:
                             scaled_qty = 1
 
-                        ok = transfer_to_trader(op_type, ticker, scaled_qty)
-                        if not ok:
-                            print('[Ошибка] Ошибка вызова сервиса Trader')
+                        response = transfer_to_trader(op_type, ticker, price, scaled_qty)
+                        print(response)
+
         time.sleep(2)
 
 if __name__ == "__main__":
