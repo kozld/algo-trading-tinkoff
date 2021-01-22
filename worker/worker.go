@@ -34,7 +34,8 @@ func (ws *WorkerService) Monitor() {
 		log.Println("Получение списка НЕ валютных активов портфеля для счета по-умолчанию")
 		positions, err := ws.client.PositionsPortfolio(ctx, sdk.DefaultAccount)
 		if err != nil {
-			log.Fatalln(err)
+			log.Println(err)
+			continue
 		}
 		log.Printf("%+v\n", positions)
 
@@ -53,7 +54,8 @@ func (ws *WorkerService) Monitor() {
 			log.Println("Получение списка выставленных заявок(ордеров) для счета по-умолчанию")
 			orders, err := ws.client.Orders(ctx, sdk.DefaultAccount)
 			if err != nil {
-				log.Fatalln(err)
+				log.Println(err)
+				continue
 			}
 
 			freeLots := position.Lots
