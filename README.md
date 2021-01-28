@@ -1,1 +1,1 @@
-# copy-trading-tinkoff
+# algo-trading-tinkoff
