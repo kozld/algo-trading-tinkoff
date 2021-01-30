@@ -11,6 +11,7 @@ import (
 )
 
 var figi string
+var inPosition bool
 var closes = make([]float64, 0)
 
 type RsiBotService struct {
@@ -62,12 +63,21 @@ func (rbs *RsiBotService) Start() {
 			lastRsi := rsi[len(rsi)-1]
 			log.Println(lastRsi)
 
+			if lastRsi > rbs.config.RsiOverbought {
+				inPosition = false
+			}
+
 			if lastRsi < rbs.config.RsiOversold {
-				log.Println("Oversold! Buy! Buy! Buy!")
-				msg := fmt.Sprintf("#%s: $%.2f Oversold! Buy! Buy! Buy!", rbs.config.Ticker, closes[len(closes)-1])
-				err = rbs.sendMessage(msg)
-				if err != nil {
-					log.Printf("error: %v", err)
+				if inPosition {
+					log.Println("It is oversold, but we already in position, nothing to do.")
+				} else {
+					log.Println("Oversold! Buy! Buy! Buy!")
+					msg := fmt.Sprintf("#%s: $%.2f Oversold! Buy! Buy! Buy!", rbs.config.Ticker, closes[len(closes)-1])
+					err = rbs.sendMessage(msg)
+					if err != nil {
+						log.Printf("error: %v", err)
+					}
+					inPosition = true
 				}
 			}
 		}
