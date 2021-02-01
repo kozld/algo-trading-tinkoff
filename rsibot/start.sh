@@ -5,7 +5,7 @@
 source ./rsibot.env
 docker build -t rsibot .
 
-tickers=(SQ AMD)
+tickers=(PYPL PTON COUP AMD V UBER AAPL PLTR MSFT ZM FB NVDA TWTR SEDG NVTA SPCE TDOC BABA FRHC SQ)
 for t in "${tickers[@]}"
 do
   source ./tickers/$t.env &&
