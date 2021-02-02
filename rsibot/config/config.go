@@ -8,9 +8,9 @@ import (
 
 type RsiBotConfig struct {
 	Ticker              string  `env:"TICKER,required"`
-	RsiPeriod           int     `env:"RSI_PERIOD" envDefault:"9"`
+	RsiPeriod           int     `env:"RSI_PERIOD" envDefault:"14"`
 	RsiOverbought       float64 `env:"RSI_OVERBOUGHT" envDefault:"70"`
-	RsiOversold         float64 `env:"RSI_OVERSOLD" envDefault:"10"`
+	RsiOversold         float64 `env:"RSI_OVERSOLD" envDefault:"30"`
 	TelegramBotToken    string  `env:"TELEGRAM_BOT_TOKEN,required"`
 	TelegramChannelName string  `env:"TELEGRAM_CHANNEL_NAME,required"`
 	TinkoffToken        string  `env:"TINKOFF_TOKEN,required"`
